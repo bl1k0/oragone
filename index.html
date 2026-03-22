@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lux Telecom | Global Voice Connectivity</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-bg: #0a0b10;
+            --secondary-bg: #11141d;
+            --accent-blue: #00d4ff;
+            --accent-purple: #7000ff;
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
+            --glass: rgba(255, 255, 255, 0.05);
+            --gradient: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            --nav-height: 80px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .bg-glow {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(112, 0, 255, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(0, 212, 255, 0.1) 0%, transparent 40%);
+        }
+
+        header {
+            position: fixed; top: 0; width: 100%; height: var(--nav-height);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 10%;
+            background: rgba(10, 11, 16, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem; font-weight: 800; letter-spacing: 1px;
+            background: var(--gradient);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links a {
+            text-decoration: none; color: var(--text-main);
+            font-size: 0.9rem; font-weight: 500; transition: 0.3s; opacity: 0.8;
+        }
+        .nav-links a:hover { opacity: 1; color: var(--accent-blue); }
+
+        .hero {
+            min-height: 100vh; padding-top: var(--nav-height);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding-left: 10%; padding-right: 10%;
+            background: linear-gradient(rgba(10,11,16,0.7), rgba(10,11,16,0.7)),
+                        url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070');
+            background-size: cover; background-position: center;
+        }
+
+        .hero-content { max-width: 900px; padding: 40px 0; }
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800;
+            margin-bottom: 25px; line-height: 1.1;
+            background: linear-gradient(to right, #fff, #888);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero p { font-size: clamp(1.1rem, 2vw, 1.4rem); color: var(--text-dim); margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+        .btn {
+            padding: 16px 40px; border-radius: 50px; text-decoration: none;
+            font-weight: 600; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-flex; align-items: center; gap: 10px;
+            cursor: pointer; border: none; font-size: 1rem;
+        }
+        .btn-primary {
+            background: var(--gradient); color: white;
+            box-shadow: 0 10px 30px rgba(112, 0, 255, 0.3);
+        }
+        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 15px 40px rgba(112, 0, 255, 0.5); }
+        .btn-telegram {
+            background: linear-gradient(135deg, #0088cc, #00b4ff);
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 136, 204, 0.3);
+        }
+        .btn-telegram:hover { transform: scale(1.05); box-shadow: 0 15px 40px rgba(0, 136, 204, 0.5); }
+
+        .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+        section { padding: 120px 10%; }
+
+        .section-title { font-size: 2.5rem; margin-bottom: 50px; text-align: center; }
+
+        .stats-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; }
+
+        .stat-box {
+            background: var(--glass); padding: 50px 30px; border-radius: 24px;
+            text-align: center; border: 1px solid rgba(255,255,255,0.08); transition: 0.3s;
+        }
+        .stat-box:hover { background: rgba(255,255,255,0.08); border-color: var(--accent-blue); transform: translateY(-5px); }
+        .stat-box i { font-size: 2.5rem; margin-bottom: 20px; color: var(--accent-blue); }
+        .stat-box h3 { font-size: 2rem; margin-bottom: 10px; }
+        .stat-box p { color: var(--text-dim); font-size: 0.95rem; }
+
+        .card-dark {
+            background: var(--secondary-bg); border-radius: 30px; padding: 60px;
+            text-align: center; border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .contact-methods { display: flex; justify-content: center; gap: 30px; margin-top: 40px; flex-wrap: wrap; }
+        .teams-color { background: #5059d4; color: white; }
+
+        /* ═══════════════════════════════════════════════════
+           TELEGRAM BOT SECTION
+        ═══════════════════════════════════════════════════ */
+
+        #bot {
+            padding: 120px 10%;
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 136, 204, 0.04) 50%, transparent 100%);
+        }
+
+        .bot-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .bot-info h2 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .bot-info h2 span {
+            background: linear-gradient(135deg, #0088cc, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bot-info p {
+            color: var(--text-dim);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .bot-features {
+            list-style: none;
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .bot-features li {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+
+        .bot-features li .feat-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(0, 136, 204, 0.15);
+            border: 1px solid rgba(0, 136, 204, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: #00b4ff;
+            font-size: 0.85rem;
+        }
+
+        .bot-features li span { color: var(--text-main); }
+
+        /* Phone mockup */
+        .bot-phone-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .bot-phone-wrap::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 136, 204, 0.15) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .phone-mockup {
+            position: relative;
+            z-index: 1;
+            width: 300px;
+            background: #1a1d2e;
+            border-radius: 40px;
+            padding: 20px 16px 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+
+        .phone-topbar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            margin-bottom: 14px;
+        }
+
+        .phone-avatar {
+            width: 38px; height: 38px; border-radius: 50%;
+            background: linear-gradient(135deg, #0088cc, #00d4ff);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; color: white; font-weight: 700; flex-shrink: 0;
+        }
+
+        .phone-name { font-size: 0.88rem; font-weight: 600; }
+        .phone-status { font-size: 0.72rem; color: #4caf50; }
+
+        .chat-messages {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-height: 320px;
+        }
+
+        .msg {
+            max-width: 82%;
+            padding: 10px 14px;
+            border-radius: 18px;
+            font-size: 0.78rem;
+            line-height: 1.5;
+            animation: msgPop 0.3s ease both;
+        }
+
+        @keyframes msgPop {
+            from { opacity: 0; transform: scale(0.9) translateY(6px); }
+            to   { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .msg-bot {
+            background: #1e3a4f;
+            border: 1px solid rgba(0,136,204,0.2);
+            border-bottom-left-radius: 4px;
+            align-self: flex-start;
+            color: #ddeeff;
+        }
+
+        .msg-user {
+            background: linear-gradient(135deg, #0055aa, #0088cc);
+            border-bottom-right-radius: 4px;
+            align-self: flex-end;
+            color: white;
+        }
+
+        .msg-bot strong { color: #00d4ff; display: block; margin-bottom: 4px; font-size: 0.8rem; }
+
+        .msg-time {
+            font-size: 0.65rem;
+            opacity: 0.5;
+            display: block;
+            margin-top: 4px;
+            text-align: right;
+        }
+
+        .quick-btns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .quick-btn {
+            background: rgba(0,136,204,0.15);
+            border: 1px solid rgba(0,136,204,0.3);
+            border-radius: 12px;
+            padding: 5px 10px;
+            font-size: 0.7rem;
+            color: #00b4ff;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quick-btn:hover { background: rgba(0,136,204,0.3); }
+
+        /* Chat animation delays */
+        .msg:nth-child(1) { animation-delay: 0.1s; }
+        .msg:nth-child(2) { animation-delay: 0.4s; }
+        .msg:nth-child(3) { animation-delay: 0.8s; }
+        .msg:nth-child(4) { animation-delay: 1.2s; }
+        .msg:nth-child(5) { animation-delay: 1.6s; }
+
+        /* Bot CTA banner */
+        .bot-cta-banner {
+            margin-top: 70px;
+            background: linear-gradient(135deg, rgba(0,136,204,0.12), rgba(0,212,255,0.06));
+            border: 1px solid rgba(0,136,204,0.25);
+            border-radius: 24px;
+            padding: 50px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .bot-cta-banner .cta-text h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .bot-cta-banner .cta-text p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+
+        .tg-handle {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,136,204,0.1);
+            border: 1px solid rgba(0,136,204,0.3);
+            border-radius: 12px;
+            padding: 10px 18px;
+            font-size: 0.9rem;
+            color: #00b4ff;
+            font-family: monospace;
+            letter-spacing: 0.5px;
+            margin-top: 12px;
+        }
+
+        /* ═══════════════════════════════════════════════════ */
+
+        footer {
+            padding: 60px 10% 30px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* ── Floating Telegram button ── */
+        .tg-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0088cc, #00b4ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(0, 136, 204, 0.5);
+            transition: 0.3s;
+            animation: floatPulse 2.5s ease-in-out infinite;
+        }
+
+        .tg-float:hover { transform: scale(1.12); box-shadow: 0 12px 35px rgba(0,136,204,0.7); }
+
+        .tg-float-tooltip {
+            position: absolute;
+            right: 70px;
+            background: #1a1d2e;
+            border: 1px solid rgba(0,136,204,0.3);
+            border-radius: 10px;
+            padding: 8px 14px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            color: white;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.2s;
+        }
+
+        .tg-float:hover .tg-float-tooltip { opacity: 1; }
+
+        @keyframes floatPulse {
+            0%, 100% { box-shadow: 0 8px 25px rgba(0,136,204,0.5); }
+            50%       { box-shadow: 0 8px 40px rgba(0,136,204,0.8); }
+        }
+
+        @media (max-width: 900px) {
+            .bot-wrapper { grid-template-columns: 1fr; }
+            .phone-mockup { width: 260px; }
+            .bot-cta-banner { flex-direction: column; text-align: center; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            section { padding: 80px 5%; }
+            #bot { padding: 80px 5%; }
+            .hero h1 { font-size: 2.5rem; }
+            .card-dark { padding: 40px 20px; }
+            .bot-cta-banner { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<!-- Floating Telegram button -->
+<a href="https://t.me/luxtelecom_bot" target="_blank" class="tg-float">
+    <span class="tg-float-tooltip">💬 Chat with our bot</span>
+    <i class="fab fa-telegram-plane"></i>
+</a>
+
+<header>
+    <div class="logo">Lux Telecom</div>
+    <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#capacity">Capacity</a></li>
+        <li><a href="#bot">B2B Bot</a></li>
+        <li><a href="#partnership">Partnership</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</header>
+
+<!-- Hero -->
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h1>Global Voice Connectivity with Lux Telecom</h1>
+        <p>Handling millions of international voice minutes every year for carriers and partners worldwide.</p>
+        <div class="hero-btns">
+            <a href="#partnership" class="btn btn-primary">Partner With Us <i class="fas fa-arrow-right"></i></a>
+            <a href="https://t.me/luxtelecom_bot" target="_blank" class="btn btn-telegram">
+                <i class="fab fa-telegram-plane"></i> B2B Inquiry Bot
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- About -->
+<section id="about">
+    <div class="card-dark">
+        <h2 class="section-title" style="margin-bottom: 20px;">About Lux Telecom</h2>
+        <p style="max-width: 800px; margin: 0 auto; color: var(--text-dim); font-size: 1.1rem; line-height: 1.8;">
+            Lux Telecom is a global telecom voice trading and connectivity company. We handle and route millions of international voice minutes every year, working with carriers and partners worldwide to ensure reliable and high-quality routes. Our infrastructure is built for scale and stability.
+        </p>
+    </div>
+</section>
+
+<!-- Capacity -->
+<section id="capacity">
+    <h2 class="section-title">Our Capacity</h2>
+    <div class="stats-container">
+        <div class="stat-box">
+            <i class="fas fa-microchip"></i>
+            <h3>Millions</h3>
+            <p>Voice minutes routed per year</p>
+        </div>
+        <div class="stat-box">
+            <i class="fas fa-network-wired"></i>
+            <h3>Global</h3>
+            <p>Carrier partnerships worldwide</p>
+        </div>
+        <div class="stat-box">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Premium</h3>
+            <p>High quality international routes</p>
+        </div>
+        <div class="stat-box">
+            <i class="fas fa-database"></i>
+            <h3>Reliable</h3>
+            <p>Telecom infrastructure</p>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     TELEGRAM BOT SECTION
+═══════════════════════════════════════════ -->
+<section id="bot">
+    <div class="bot-wrapper">
+
+        <!-- Left: info -->
+        <div class="bot-info">
+            <h2>Instant B2B Inquiries via<br><span>Telegram Bot</span></h2>
+            <p>
+                Our intelligent B2B portal bot qualifies your inquiry automatically and connects you with the right team within 24 hours — no forms, no waiting rooms.
+            </p>
+            <ul class="bot-features">
+                <li>
+                    <div class="feat-icon"><i class="fas fa-route"></i></div>
+                    <span>NCLI & direct route qualification — vendors not accepted</span>
+                </li>
+                <li>
+                    <div class="feat-icon"><i class="fas fa-phone-volume"></i></div>
+                    <span>DID numbers, SIP trunking, interconnect & peering</span>
+                </li>
+                <li>
+                    <div class="feat-icon"><i class="fas fa-chart-line"></i></div>
+                    <span>Traffic volume assessment for accurate pricing</span>
+                </li>
+                <li>
+                    <div class="feat-icon"><i class="fas fa-globe"></i></div>
+                    <span>Destination coverage — UAE, GCC, Europe, USA & more</span>
+                </li>
+                <li>
+                    <div class="feat-icon"><i class="fas fa-comments"></i></div>
+                    <span>Live chat mode — connect to our team instantly</span>
+                </li>
+                <li>
+                    <div class="feat-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                    <span>Rate sheet available on request via bot</span>
+                </li>
+            </ul>
+            <a href="https://t.me/luxtelecom_bot" target="_blank" class="btn btn-telegram">
+                <i class="fab fa-telegram-plane"></i> Start B2B Inquiry
+            </a>
+        </div>
+
+        <!-- Right: phone mockup -->
+        <div class="bot-phone-wrap">
+            <div class="phone-mockup">
+                <div class="phone-topbar">
+                    <div class="phone-avatar">LT</div>
+                    <div>
+                        <div class="phone-name">Lux Telecom Bot</div>
+                        <div class="phone-status">● Online</div>
+                    </div>
+                </div>
+                <div class="chat-messages" id="chatDemo">
+                    <div class="msg msg-bot">
+                        <strong>Lux Telecom</strong>
+                        👋 Welcome! This is our B2B inquiry portal.<br>
+                        What is your <b>company name</b>?
+                        <span class="msg-time">09:41</span>
+                    </div>
+                    <div class="msg msg-user">
+                        ABC Voice Ltd
+                        <span class="msg-time">09:41</span>
+                    </div>
+                    <div class="msg msg-bot">
+                        <strong>Lux Telecom</strong>
+                        👍 <b>ABC Voice Ltd</b> noted!<br>
+                        What are you <b>interested in</b>?
+                        <span class="msg-time">09:41</span>
+                    </div>
+                    <div class="msg msg-user">
+                        🔗 Interconnect / Peering
+                        <span class="msg-time">09:42</span>
+                    </div>
+                    <div class="msg msg-bot">
+                        <strong>Lux Telecom</strong>
+                        Do you have <b>NCLI routes</b> available?<br>
+                        <i style="opacity:0.6;font-size:0.72rem">Direct only — no vendors accepted</i>
+                        <span class="msg-time">09:42</span>
+                    </div>
+                </div>
+                <div class="quick-btns">
+                    <div class="quick-btn">✅ Yes, NCLI</div>
+                    <div class="quick-btn">❌ No NCLI</div>
+                    <div class="quick-btn">📞 Buy DIDs</div>
+                    <div class="quick-btn">📋 Rates</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Banner -->
+    <div class="bot-cta-banner">
+        <div class="cta-text">
+            <h3>Ready to connect with Lux Telecom?</h3>
+            <p>Start your B2B inquiry now — takes less than 2 minutes.</p>
+            <div class="tg-handle">
+                <i class="fab fa-telegram-plane"></i>
+                @luxtelecom_bot
+            </div>
+        </div>
+        <a href="https://t.me/luxtelecom_bot" target="_blank" class="btn btn-telegram" style="white-space:nowrap;">
+            <i class="fab fa-telegram-plane"></i> Open in Telegram
+        </a>
+    </div>
+</section>
+
+<!-- Partnership -->
+<section id="partnership">
+    <div class="card-dark">
+        <h2 class="section-title" style="margin-bottom: 20px;">Partner With Lux Telecom</h2>
+        <p style="color: var(--text-dim); margin-bottom: 30px;">
+            If you are a telecom carrier, VoIP provider, or voice trading company looking for reliable routes and strong traffic volumes, we welcome new partnerships.
+        </p>
+        <div class="contact-methods">
+            <a href="mailto:partners@luxtelecoms.com" class="btn btn-primary">
+                <i class="fas fa-envelope"></i> Email Us
+            </a>
+            <a href="https://t.me/luxtelecom_bot" target="_blank" class="btn btn-telegram">
+                <i class="fab fa-telegram-plane"></i> Telegram Bot
+            </a>
+            <a href="https://teams.microsoft.com/l/chat/0/0?users=live:.cid.d19965c92c60bdf4" class="btn teams-color">
+                <i class="fab fa-microsoft"></i> Connect on Teams
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" style="text-align: center;">
+    <h2 class="section-title">Contact Channels</h2>
+    <p style="color: var(--text-dim);">Direct access to our partnership team</p>
+    <div class="contact-methods">
+        <div style="background: var(--glass); padding: 20px; border-radius: 15px;">
+            <strong>Email:</strong> partners@luxtelecoms.com
+        </div>
+        <div style="background: var(--glass); padding: 20px; border-radius: 15px;">
+            <strong>Telegram Bot:</strong>
+            <a href="https://t.me/luxtelecom_bot" target="_blank"
+               style="color: #00b4ff; text-decoration: none; margin-left: 6px;">@luxtelecom_bot</a>
+        </div>
+        <div style="background: var(--glass); padding: 20px; border-radius: 15px;">
+            <strong>Microsoft Teams:</strong> live:.cid.d19965c92c60bdf4
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="logo" style="font-size: 1.2rem; margin-bottom: 10px;">Lux Telecom</div>
+    <p style="color: var(--text-dim); font-size: 0.9rem;">Global Voice Connectivity</p>
+    <p style="margin-top: 15px; color: var(--text-dim); font-size: 0.85rem;">
+        <a href="https://t.me/luxtelecom_bot" target="_blank"
+           style="color: #00b4ff; text-decoration: none;">
+            <i class="fab fa-telegram-plane"></i> @luxtelecom_bot
+        </a>
+        &nbsp;·&nbsp;
+        <a href="mailto:partners@luxtelecoms.com"
+           style="color: var(--text-dim); text-decoration: none;">partners@luxtelecoms.com</a>
+    </p>
+    <p style="margin-top: 20px; opacity: 0.3; font-size: 0.8rem;">© 2026 Lux Telecom. All rights reserved.</p>
+</footer>
+
+<script>
+    // Animate quick buttons to simulate demo interaction
+    const quickBtns = document.querySelectorAll('.quick-btn');
+    quickBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            btn.style.background = 'rgba(0,136,204,0.4)';
+            btn.style.borderColor = '#00b4ff';
+            setTimeout(() => {
+                btn.style.background = '';
+                btn.style.borderColor = '';
+            }, 400);
+        });
+    });
+
+    // Replay chat animation on scroll into view
+    const chatDemo = document.getElementById('chatDemo');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const msgs = chatDemo.querySelectorAll('.msg');
+                msgs.forEach(m => {
+                    m.style.animation = 'none';
+                    m.offsetHeight; // reflow
+                    m.style.animation = '';
+                });
+            }
+        });
+    }, { threshold: 0.3 });
+    if (chatDemo) observer.observe(chatDemo);
+</script>
+
+</body>
+</html>
